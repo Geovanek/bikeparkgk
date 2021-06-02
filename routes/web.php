@@ -26,4 +26,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/profile/{id}', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
+Route::view('/profile/{id}', 'profile')->middleware('auth')->name('profile');

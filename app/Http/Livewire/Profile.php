@@ -9,10 +9,15 @@ class Profile extends Component
 {
     public $user, $email;
 
-    public function mount($id)
+    public function mount()
     {
-        $this->user = User::findOrFail($id);
+        $this->user = User::findOrFail(request()->id);
+    }
+
+    public function render()
+    {
         $this->email = $this->user->email;
+        return view('livewire.profile');
     }
 
     public function update()
@@ -25,7 +30,9 @@ class Profile extends Component
             ],
         );
 
-        User::where('id', $this->user->id)->update(['email' => $validate['email']]);
+        $user = User::where('id', $this->user->id)->firstOrFail();
+        $user->update($validate);
+        //User::where('id', $this->user->id)->update(['email' => $validate['email']]);
 
         $this->emit('message', [
             'type' => 'success', 
@@ -46,10 +53,5 @@ class Profile extends Component
             'email'
         ]);
         $this->resetErrorBag('email');
-    }
-
-    public function render()
-    {
-        return view('livewire.profile');
     }
 }
