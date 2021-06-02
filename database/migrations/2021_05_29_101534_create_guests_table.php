@@ -16,7 +16,7 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
-            $table->string('endpoint',255)->unique();
+            $table->string('endpoint')->unique();
             $table->timestamps();
         });
     }
