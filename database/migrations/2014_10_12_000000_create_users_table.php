@@ -25,6 +25,9 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->default(false);
             $table->timestamp('activities_until')->nullable();
             $table->string('profile_link')->nullable();
+            $table->char('sex',1);
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

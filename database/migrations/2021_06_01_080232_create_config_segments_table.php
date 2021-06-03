@@ -15,6 +15,9 @@ class CreateConfigSegmentsTable extends Migration
     {
         Schema::create('config_segments', function (Blueprint $table) {
             $table->id();
+            $table->integer('segment_id');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@
 @endpush
 
 @section('livewire-js')
+    <script src="{{asset('js/livewireGritter.js')}}"></script>
     <script type="text/javascript">
         window.livewire.on('closeModal', () => {
             $('#myModal').modal('hide');

@@ -20,9 +20,9 @@ class CreateStravaActivitiesTable extends Migration
             $table->string('activity_upload_id');
             $table->string('name');
             $table->string('type');
-            $table->timestamp('start_date')->nullable();;
-            $table->timestamp('start_date_local')->nullable();;
-            $table->integer('utc_offset')->nullable();;
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('start_date_local')->nullable();
+            $table->integer('utc_offset')->nullable();
             $table->boolean('is_analyzed')->default(false);
             $table->timestamps();
         });

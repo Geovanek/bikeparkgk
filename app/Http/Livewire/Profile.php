@@ -12,11 +12,11 @@ class Profile extends Component
     public function mount()
     {
         $this->user = User::findOrFail(request()->id);
+        $this->email = $this->user->email;
     }
 
     public function render()
     {
-        $this->email = $this->user->email;
         return view('livewire.profile');
     }
 
@@ -32,7 +32,8 @@ class Profile extends Component
 
         $user = User::where('id', $this->user->id)->firstOrFail();
         $user->update($validate);
-        //User::where('id', $this->user->id)->update(['email' => $validate['email']]);
+
+        $this->user = $user;
 
         $this->emit('message', [
             'type' => 'success', 

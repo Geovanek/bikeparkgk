@@ -20,9 +20,7 @@ Route::post('/push',[PushController::class,'store'])->name('push.subscription');
 /** Sitemap Routes */
 //Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::view('/', 'index')->name('home');
 
 Auth::routes();
 

@@ -28,6 +28,9 @@ class User extends Authenticatable
         'is_admin',
         'activities_until',
         'profile_link',
+        'sex',
+        'city',
+        'state',
     ];
 
     /**

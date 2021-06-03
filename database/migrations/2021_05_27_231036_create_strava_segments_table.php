@@ -23,8 +23,8 @@ class CreateStravaSegmentsTable extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
-            $table->string('start_date')->nullable();;
-            $table->string('start_date_local')->nullable();;
+            $table->string('start_date')->nullable();
+            $table->string('start_date_local')->nullable();
             $table->timestamps();
         });
     }

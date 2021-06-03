@@ -28,6 +28,9 @@
     <link href="{{ asset('Dashio/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('Dashio/css/style-responsive.css') }}" rel="stylesheet">
 
+    <!-- Precisa ficar aqui para funcionar -->
+    <script src="{{ asset('Dashio/lib/chart-master/Chart.js') }}"></script>
+
     {{-- page specific css --}}
     @yield('page-css')
 
@@ -46,7 +49,17 @@
         @include('layouts.sidebar')
 
         <section id="main-content">
-            @yield('content')
+            <section class="wrapper site-min-height">
+                @if (session('strava-sex'))
+                    <div class="row">
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            {{ session('strava-sex') }}
+                        </div>
+                    </div>
+                @endif
+                @yield('content')
+            </section>
         </section>
 
         @include('layouts.footer')
