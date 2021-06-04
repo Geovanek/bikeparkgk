@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\StravaActivity;
+use App\Models\StravaSegment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -54,77 +55,99 @@ class GetActivities extends Command
             Log::info(count($users) . ' usuário(s) encontrado(s).');
 
             $users->each(function ($user) {
-                Log::info('Obtendo atividades do usuário '. $user->id);
+                if ($user->subscription == false) {
+                    Log::info('Usuário ainda não efetuou o pagamento da inscrição '. $user->id);
+                } else {
+                    Log::info('Obtendo atividades do usuário '. $user->id);
 
-                // Make sure Strava API Token is valid
-                if (Carbon::now() > $user->expires_at) {
-                    Log::info('API Token expirou, atualizando o token.');
-                    // Token has expired, generate new tokens using the currently stored user refresh token
-                    $refresh = Strava::refreshToken($user->refresh_token);
+                    // Make sure Strava API Token is valid
+                    if (Carbon::now() > $user->expires_at) {
+                        Log::info('API Token expirou, atualizando o token.');
+                        // Token has expired, generate new tokens using the currently stored user refresh token
+                        $refresh = Strava::refreshToken($user->refresh_token);
 
-                    $user->update([
-                        'access_token' => $refresh->access_token,
-                        'refresh_token' => $refresh->refresh_token,
-                        'expires_at' => Carbon::createFromTimestamp($refresh->expires_at)
-                    ]);
+                        $user->update([
+                            'access_token' => $refresh->access_token,
+                            'refresh_token' => $refresh->refresh_token,
+                            'expires_at' => Carbon::createFromTimestamp($refresh->expires_at)
+                        ]);
 
-                    $user->save();
-                }
-
-                // Set starting date to get activities from if not set
-                if (empty($user->activities_until)) {
-                    Log::info('Não foram encontradas atividades deste usuário, obtendo atividades desde 03-06-2021.');
-                    $user->activities_until = Carbon::createMidnightDate('2021', '05', '20');;
-                    $user->save();
-                }
-
-                //if ($user->activities_until->lessThanOrEqualTo(Carbon::createMidnightDate('2021', '06', '23'))) {
-
-                    $now = Carbon::now()->timestamp;
-                    $activities = collect(Strava::activities($user->access_token, 1, 100, $now, ($user->activities_until->timestamp - 1)));
-                    $activities = $activities->reverse();
-
-                    if(count($activities) == 0) {
-                        Log::info('Nenhuma atividade encontrada para o usuário.');
-                    } else {
-                        Log::info(count($activities) .' atividade(s) encontrada(s).');
-
-                        $activities->each(function ($activity) use (&$user) {
-
-                            if (count($user->activities()->where('id', '=', $activity->id)->get()) > 0) {
-                                Log::info('A atividade ' . $activity->id . ' já existe.');
-                            } else {
-                                Log::info('Criando atividade '. $activity->id);
-
-                                /* StravaActivity::create([
-                                    'user_id' => $user->id,
-                                    'external_id' => $activity->external_id,
-                                    'activity_upload_id' => $activity->upload_id,
-                                    'name' => $activity->name,
-                                    'type' => strtolower($activity->type),
-                                    'start_date' => Carbon::parse($activity->start_date),
-                                    'start_date_local' => Carbon::parse($activity->start_date_local),
-                                    'utc_offset' => $activity->utc_offset,
-                                ]); */
-
-                                $user->activities_until = Carbon::parse($activity->start_date)->addSeconds($activity->elapsed_time);
-
-                                // Verificação do segmento na atividade e contagem de voltas
-                                $getSegments = Strava::activity($user->access_token, $activity->id);
-                                $segments = collect($getSegments->segment_efforts);
-                                
-                                $segments->each(function ($segment) use (&$user) {
-                                    if ($segment->segment->id == '23142740') {
-                                        dd($segment->name);
-                                    }
-                                });
-                            }
-                        });
                         $user->save();
                     }
 
-                    Log::info('Registro de atividades e voltas no segmentos concluídas para o usuário '. $user->id);
-                //}
+                    // Set starting date to get activities from if not set
+                    if (empty($user->activities_until)) {
+                        Log::info('Não foram encontradas atividades deste usuário, obtendo atividades desde 03-06-2021.');
+                        $user->activities_until = Carbon::createMidnightDate('2021', '06', '03');;
+                        $user->save();
+                    }
+
+                    if ($user->activities_until->lessThanOrEqualTo(Carbon::createMidnightDate('2021', '06', '24'))) {
+
+                        $now = Carbon::now()->timestamp;
+                        $activities = collect(Strava::activities($user->access_token, 1, 100, $now, ($user->activities_until->timestamp - 1)));
+                        $activities = $activities->reverse();
+
+                        if(count($activities) == 0) {
+                            Log::info('Nenhuma atividade encontrada para o usuário.');
+                        } else {
+                            Log::info(count($activities) .' atividade(s) encontrada(s).');
+
+                            $activities->each(function ($activity) use (&$user) {
+
+                                if (count($user->activities()->where('id', '=', $activity->id)->get()) > 0) {
+                                    Log::info('A atividade ' . $activity->id . ' já existe.');
+                                } else {
+                                    Log::info('Criando atividade '. $activity->id);
+
+                                    $lastActivity =  StravaActivity::create([
+                                        'user_id' => $user->id,
+                                        'activity_id' => $activity->id,
+                                        'external_id' => $activity->external_id,
+                                        'activity_upload_id' => $activity->upload_id,
+                                        'name' => $activity->name,
+                                        'type' => strtolower($activity->type),
+                                        'start_date' => Carbon::parse($activity->start_date),
+                                        'start_date_local' => Carbon::parse($activity->start_date_local),
+                                        'utc_offset' => $activity->utc_offset,
+                                    ]);
+
+                                    $user->activities_until = Carbon::parse($activity->start_date_local)->addSeconds($activity->elapsed_time);
+
+                                    // Verificação do segmento na atividade e contagem de voltas
+                                    $getSegments = Strava::activity($user->access_token, $activity->id);
+                                    $segments = collect($getSegments->segment_efforts);
+
+                                    $countSegments = $segments
+                                        ->filter( function ($segment) {
+                                            return $segment->segment->id == '28679238';
+                                        })->map( function ($segment) use (&$user, &$lastActivity) {
+                                            return [
+                                                'user_id' => $user->id,
+                                                'strava_activity_id' => $lastActivity->id,
+                                                'segment_id' => $segment->segment->id,
+                                                'segment_lap_id' => $segment->id,
+                                                'segment_name' => $segment->name,
+                                                'distance' => $segment->distance,
+                                                'city' => $segment->segment->city,
+                                                'state' => $segment->segment->state,
+                                                'country' => $segment->segment->country,
+                                                'start_date' => Carbon::parse($segment->start_date),
+                                                'start_date_local' => Carbon::parse($segment->start_date_local),
+                                            ];
+                                        });
+
+                                    StravaSegment::insert($countSegments->toArray());
+                                    
+                                    Log::info('Voltas nos segmento registrados para a atividade'. $lastActivity->id .' do usuário '. $user->id);
+                                }
+                            });
+                            $user->save();
+                        }
+
+                        Log::info('Registro de atividades e voltas no segmentos concluídas para o usuário '. $user->id);
+                    }
+                }
             });
         }
 

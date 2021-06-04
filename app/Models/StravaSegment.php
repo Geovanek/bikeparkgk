@@ -13,6 +13,7 @@ class StravaSegment extends Model
         'user_id',
         'strava_activity_id',
         'segment_id',
+        'segment_lap_id',
         'segment_name',
         'distance',
         'city',
@@ -21,4 +22,14 @@ class StravaSegment extends Model
         'start_date',
         'start_date_local',
     ];
+
+    public function activity()
+    {
+        return $this->belongsTo(StravaActivity::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -12,7 +12,7 @@ class StravaActivity extends Model
 
     protected $fillable = [
         'user_id',
-        'strava_activity_id',
+        'activity_id',
         'external_id',
         'activity_upload_id',
         'name',
@@ -24,4 +24,14 @@ class StravaActivity extends Model
     ];
 
     protected $dates = ['start_date', 'start_date_local'];
+
+    public function segments()
+    {
+        return $this->hasMany(StravaSegment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

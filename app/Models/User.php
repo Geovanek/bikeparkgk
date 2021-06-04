@@ -31,6 +31,7 @@ class User extends Authenticatable
         'sex',
         'city',
         'state',
+        'subscription'
     ];
 
     /**
@@ -60,5 +61,10 @@ class User extends Authenticatable
     public function activities()
     {
         return $this->hasMany(StravaActivity::class);
+    }
+
+    public function segments()
+    {
+        return $this->hasMany(StravaSegment::class);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PushController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StravaSocialite;
@@ -25,3 +24,4 @@ Route::view('/', 'index')->name('home');
 Auth::routes();
 
 Route::view('/profile/{id}', 'profile')->middleware('auth')->name('profile');
+Route::view('/admin', 'admin')->middleware(['auth','admin'])->name('admin');
