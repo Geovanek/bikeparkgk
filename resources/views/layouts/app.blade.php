@@ -12,24 +12,17 @@
 
     <title>{{ config('app.name', 'Bike Park GK') }} @yield('title')</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Favicons -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('Dashio/lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!--external css-->
-    <link href="{{ asset('Dashio/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('Dashio/lib/gritter/css/jquery.gritter.css') }}" />
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('Dashio/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('Dashio/css/style-responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspina/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspina/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspina/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspina/css/plugins/codemirror/codemirror.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspina/css/plugins/codemirror/ambiance.css') }}" rel="stylesheet">
+    <link href="{{ asset('Inspina/css/style.css') }}" rel="stylesheet">
 
-    <!-- Precisa ficar aqui para funcionar -->
-    <script src="{{ asset('Dashio/lib/chart-master/Chart.js') }}"></script>
+    <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
 
     {{-- page specific css --}}
     @yield('page-css')
@@ -43,41 +36,69 @@
         License: https://templatemag.com/license/
     ======================================================= -->
 </head>
-<body>
-    <section id="container">
-        @include('layouts.header')
-        @include('layouts.sidebar')
-
-        <section id="main-content">
-            <section class="wrapper site-min-height">
+<body class="fixed-sidebar no-skin-config">
+    <div style="overflow-y: hidden;" id="wrapper">
+        @include('layouts.sidebarLeft')
+        <div id="page-wrapper" class="gray-bg @if(Request::is('/')) sidebar-content @endif">
+            @include('layouts.header')
+            
                 @if (session('strava-sex'))
                     <div class="row">
                         <div class="alert alert-danger alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                             {{ session('strava-sex') }}
                         </div>
                     </div>
                 @endif
-                @yield('content')
-            </section>
-        </section>
 
-        @include('layouts.footer')
-    </section>
+                @yield('content')
+
+            @include('layouts.footer')
+        </div>
+    </div>
 
   {{-- js placed at the end of the document so the pages load faster --}}
   <script src="{{ asset('Dashio/lib/jquery/jquery.min.js') }}"></script>
 
-  <script src="{{ asset('Dashio/lib/bootstrap/js/bootstrap.min.js') }}"></script>
-  <script class="include" type="text/javascript" src="{{ asset('Dashio/lib/jquery.dcjqaccordion.2.7.js') }}"></script>
-  <script src="{{ asset('Dashio/lib/jquery.scrollTo.min.js') }}"></script>
-  <script src="{{ asset('Dashio/lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('Dashio/lib/jquery.sparkline.js') }}"></script>
+  <!-- Mainly scripts -->
+  <script src="{{ asset('Inspina/js/jquery-3.1.1.min.js') }}"></script>
+  <script src="{{ asset('Inspina/js/popper.min.js') }}"></script>
+  <script src="{{ asset('Inspina/js/bootstrap.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-  {{-- common script for all pages --}}
-  <script src="{{ asset('Dashio/lib/common-scripts.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('Dashio/lib/gritter/js/jquery.gritter.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('Dashio/lib/gritter-conf.js') }}"></script>
+  <!-- Flot -->
+  <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.spline.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.resize.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.pie.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.symbol.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/flot/curvedLines.js') }}"></script>
+
+  <!-- Peity -->
+  <script src="{{ asset('Inspina/js/plugins/peity/jquery.peity.min.js') }}"></script>
+  <script src="{{ asset('Inspina/js/demo/peity-demo.js') }}"></script>
+
+  <!-- Custom and plugin javascript -->
+  <script src="{{ asset('Inspina/js/inspinia.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/pace/pace.min.js') }}"></script>
+
+  <!-- jQuery UI -->
+  <script src="{{ asset('Inspina/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+  <!-- Jvectormap -->
+  <script src="{{ asset('Inspina/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+  <script src="{{ asset('Inspina/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+
+  <!-- Sparkline -->
+  <script src="{{ asset('Inspina/js/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+
+  <!-- Sparkline demo data  -->
+  <script src="{{ asset('Inspina/js/demo/sparkline-demo.js') }}"></script>
+
+  <!-- ChartJS-->
+  <script src="{{ asset('Inspina/js/plugins/chartJs/Chart.min.js') }}"></script>
 
   {{-- script for this page --}}
   @stack('custom-scripts')

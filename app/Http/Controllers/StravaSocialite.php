@@ -31,6 +31,7 @@ class StravaSocialite extends Controller
             'name' => $providerUser->getName() ?? $providerUser->getNickname(),
             'strava_id' => $providerUser->getid(),
             'avatar' => $providerUser->getAvatar(),
+            'profile_link' => 'https://www.strava.com/athletes/'. $providerUser->getid(),
             'access_token' => $providerUser->accessTokenResponseBody['access_token'],
             'refresh_token' => $providerUser->accessTokenResponseBody['refresh_token'],
             'expires_at' => Carbon::createFromTimestamp($providerUser->accessTokenResponseBody['expires_at']),
