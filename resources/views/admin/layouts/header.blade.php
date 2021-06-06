@@ -1,14 +1,29 @@
-<div class="row border-bottom">
-    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">Desafio Local Legend Bike Park GK</span>
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-expand-lg navbar-static-top" role="navigation">
+        <!--<div class="navbar-header">-->
+            <!--<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">-->
+                <!--<i class="fa fa-reorder"></i>-->
+            <!--</button>-->
+
+            <a href="{{ route('admin.dashboard') }}" class="navbar-brand">Bike Park GK</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-reorder"></i>
+            </button>
+
+        <!--</div>-->
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="active">
+                    <a aria-expanded="false" role="button" href="{{ route('home') }}">Home</a>
                 </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item</a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="">Menu item</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
                 @guest
                     <li>
                         <a href="{{ route('strava.redirect') }}">
@@ -53,6 +68,6 @@
                     </li>
                 @endguest
             </ul>
-
+        </div>
     </nav>
 </div>

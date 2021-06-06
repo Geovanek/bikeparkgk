@@ -17,37 +17,24 @@
 
     <link href="{{ asset('Inspina/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('Inspina/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <!-- FooTable -->
+    <link href="{{ asset('Inspina/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="{{ asset('Inspina/css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('Inspina/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('Inspina/css/plugins/codemirror/codemirror.css') }}" rel="stylesheet">
-    <link href="{{ asset('Inspina/css/plugins/codemirror/ambiance.css') }}" rel="stylesheet">
     <link href="{{ asset('Inspina/css/style.css') }}" rel="stylesheet">
 
-    <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
-
-    {{-- page specific css --}}
     @yield('page-css')
 
     @livewireStyles
     
 </head>
-<body class="fixed-sidebar no-skin-config">
-    <div style="overflow-y: hidden;" id="wrapper">
-        @include('layouts.sidebarLeft')
-        <div id="page-wrapper" class="gray-bg @if(Request::is('/')) sidebar-content @endif">
-            @include('layouts.header')
-            
-                @if (session('strava-sex'))
-                    <div class="row">
-                        <div class="alert alert-danger alert-dismissable">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                            {{ session('strava-sex') }}
-                        </div>
-                    </div>
-                @endif
-
-                @yield('content')
-
-            @include('layouts.footer')
+<body class="top-navigation">
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            @include('admin.layouts.header')
+            @yield('content')
         </div>
     </div>
 
@@ -67,25 +54,21 @@
   <script src="{{ asset('Inspina/js/plugins/flot/jquery.flot.symbol.js') }}"></script>
   <script src="{{ asset('Inspina/js/plugins/flot/curvedLines.js') }}"></script>
 
-  <!-- Peity -->
-  <script src="{{ asset('Inspina/js/plugins/peity/jquery.peity.min.js') }}"></script>
-  <script src="{{ asset('Inspina/js/demo/peity-demo.js') }}"></script>
-
+  <!-- FooTable -->
+  <script src="{{ asset('Inspina/js/plugins/footable/footable.all.min.js') }}"></script>
   <!-- Custom and plugin javascript -->
   <script src="{{ asset('Inspina/js/inspinia.js') }}"></script>
   <script src="{{ asset('Inspina/js/plugins/pace/pace.min.js') }}"></script>
-
   <!-- jQuery UI -->
   <script src="{{ asset('Inspina/js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-
   <!-- Sparkline -->
   <script src="{{ asset('Inspina/js/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
-
   <!-- Sparkline demo data  -->
   <script src="{{ asset('Inspina/js/demo/sparkline-demo.js') }}"></script>
-
   <!-- ChartJS-->
   <script src="{{ asset('Inspina/js/plugins/chartJs/Chart.min.js') }}"></script>
+  <!-- Toastr -->
+  <script src="{{ asset('Inspina/js/plugins/toastr/toastr.min.js') }}"></script>
 
   {{-- script for this page --}}
   @stack('custom-scripts')

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ConfigSegment;
 use App\Models\StravaActivity;
 use App\Models\StravaSegment;
 use App\Models\User;
@@ -48,13 +49,14 @@ class GetActivities extends Command
         Log::info('Obtendo usuários.');
 
         $users = User::get();
+        $configSegment = ConfigSegment::first();
 
         if (count($users) == 0) {
             Log::info('Nenhum usuário encontrado.');
         } else {
             Log::info(count($users) . ' usuário(s) encontrado(s).');
 
-            $users->each(function ($user) {
+            $users->each(function ($user) use (&$configSegment) {
                 if ($user->subscription == false) {
                     Log::info('Usuário ainda não efetuou o pagamento da inscrição '. $user->id);
                 } else {
@@ -78,11 +80,11 @@ class GetActivities extends Command
                     // Set starting date to get activities from if not set
                     if (empty($user->activities_until)) {
                         Log::info('Não foram encontradas atividades deste usuário, obtendo atividades desde 03-06-2021.');
-                        $user->activities_until = Carbon::createMidnightDate('2021', '06', '03');;
+                        $user->activities_until = Carbon::createMidnightDate($configSegment->start_date);
                         $user->save();
                     }
 
-                    if ($user->activities_until->lessThanOrEqualTo(Carbon::createMidnightDate('2021', '06', '24'))) {
+                    if ($user->activities_until->lessThanOrEqualTo(Carbon::createMidnightDate($configSegment->end_date)->addHours(23)->addMinutes(59))) {
 
                         $now = Carbon::now()->timestamp;
                         $activities = collect(Strava::activities($user->access_token, 1, 100, $now, ($user->activities_until->timestamp - 1)));
@@ -93,7 +95,7 @@ class GetActivities extends Command
                         } else {
                             Log::info(count($activities) .' atividade(s) encontrada(s).');
 
-                            $activities->each(function ($activity) use (&$user) {
+                            $activities->each(function ($activity) use (&$user, &$configSegment) {
 
                                 if (count($user->activities()->where('id', '=', $activity->id)->get()) > 0) {
                                     Log::info('A atividade ' . $activity->id . ' já existe.');
@@ -119,8 +121,8 @@ class GetActivities extends Command
                                     $segments = collect($getSegments->segment_efforts);
 
                                     $countSegments = $segments
-                                        ->filter( function ($segment) {
-                                            return $segment->segment->id == '28679238';
+                                        ->filter( function ($segment) use (&$configSegment) {
+                                            return $segment->segment->id == $configSegment->segment_id;
                                         })->map( function ($segment) use (&$user, &$lastActivity) {
                                             return [
                                                 'user_id' => $user->id,
@@ -160,7 +162,6 @@ class GetActivities extends Command
         $now = $now->addMinutes(15);
         $start = Carbon::createFromTimeString('05:00');
         $end = Carbon::createFromTimeString('23:00');
-
 
         if ($now->between($start, $end)) {
             Cache::store('file')->put('strava_next_activities_time', $now->toDateTimeString());

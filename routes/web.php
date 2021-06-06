@@ -24,4 +24,4 @@ Route::view('/', 'index')->name('home');
 Auth::routes();
 
 Route::view('/profile/{id}', 'profile')->middleware('auth')->name('profile');
-Route::view('/admin', 'admin')->middleware(['auth','admin'])->name('admin');
+Route::view('/admin/dashboard', 'admin.dashboard')->middleware(['auth','admin'])->name('admin.dashboard');
