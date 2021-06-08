@@ -20,7 +20,11 @@
                                             $first = $userMale->segments_count;
                                         }
 
-                                        $progress = round($userMale->segments_count/$first*100);
+                                        if (!empty($userMale->segments_count)) {
+                                            $progress = round($userMale->segments_count/$first*100);
+                                        } else {
+                                            $progress = 0;
+                                        }
                                     @endphp
                                     <div class="col-sm-2 text-center">
                                         <dt class="project-people text-sm-center">
@@ -40,7 +44,7 @@
                                     <div class="col-sm-10 text-sm-left">
                                         <dd>
                                             <div class="progress progress-small m-t-n-sm m-b-1">
-                                                <div style="width: {{ $progress }}%;" class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                                                <div style="width: {{ $progress }}%;" class="progress-bar progress-bar-striped"></div>
                                             </div>
                                             <small><strong>{{ $userMale->segments_count }}</strong> volta(s)</small>
                                         </dd>
@@ -51,13 +55,24 @@
                         <div class="col-md-6">
                             <h3 class="text-right">Feminino <i class="fa fa-female"></i></h3>
                             <dl class="row mb-0">
+                                @if(isset($usersFemale))
+                                <div class="col-sm-10 text-sm-right">
+                                    <dd>
+                                        Nenhuma volta computada.
+                                    </dd>
+                                </div>
+                                @endif
                                 @foreach($usersFemale as $userFemale)
                                     @php
                                         if ($loop->iteration == 1) {
                                             $first = $userFemale->segments_count;
                                         }
 
-                                        $progress = round($userFemale->segments_count/$first*100);
+                                        if (!empty($userFemale->segments_count)) {
+                                            $progress = round($userFemale->segments_count/$first*100);
+                                        } else {
+                                            $progress = 0;
+                                        }
                                     @endphp
                                     <div class="col-sm-10 text-sm-right">
                                         <dd>
@@ -74,7 +89,7 @@
                                     <div class="col-sm-10 text-sm-right">
                                         <dd>
                                             <div style="display:inherit" class="progress progress-small m-t-n-sm m-b-1">
-                                                <div style="width: {{ $progress }}%; float: right;display: flex;" class="progress-bar progress-bar-striped progress-bar-animated progress-bar-danger"></div>
+                                                <div style="width: {{ $progress }}%; float: right;display: flex;" class="progress-bar progress-bar-striped progress-bar-danger"></div>
                                             </div>
                                             <small><strong>{{ $userFemale->segments_count }}</strong> volta(s)</small>
                                         </dd>
@@ -100,7 +115,7 @@
                     </div>
                     <div class="col-10 text-right">
                         <span> Atletas inscritos: </span>
-                        <h3 class="font-bold">{{ $usersMale->count() }}</h3>
+                        <h3 class="font-bold">{{ $countMale }}</h3>
                     </div>
                 </div>
             </div>
@@ -113,7 +128,7 @@
                     </div>
                     <div class="col-10 text-right">
                         <span> Premiação Total: </span>
-                        <h3 class="font-bold">R${{ $usersMale->count()*10 }},00</h3>
+                        <h3 class="font-bold">R${{ $countMale*10 }},00</h3>
                     </div>
                 </div>
             </div>
@@ -126,7 +141,7 @@
                     </div>
                     <div class="col-10 text-right">
                         <span> Atletas inscritas: </span>
-                        <h3 class="font-bold">{{ $usersFemale->count() }}</h3>
+                        <h3 class="font-bold">{{ $countFemale }}</h3>
                     </div>
                 </div>
             </div>
@@ -139,7 +154,7 @@
                     </div>
                     <div class="col-10 text-right">
                         <span> Premiação Total: </span>
-                        <h3 class="font-bold">R${{ $usersFemale->count()*10 }},00</h3>
+                        <h3 class="font-bold">R${{ $countFemale*10 }},00</h3>
                     </div>
                 </div>
             </div>
