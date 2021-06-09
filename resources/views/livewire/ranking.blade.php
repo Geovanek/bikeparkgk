@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="m-b-lg">
-                                <a href="{{ route('ranking') }}" class="btn btn-white btn-xs float-right">Ranking Completo</a>
+                                <a href="{{ route('home') }}" class="btn btn-white btn-xs float-right">Voltar para Home</a>
                                 <h2><i class="fa fa-trophy"></i> Ranking Local Legends</h2>
                             </div>
                         </div>
@@ -15,6 +15,13 @@
                         <div class="col-md-6">
                             <h3><i class="fa fa-male"></i> Masculino</h3>
                             <dl class="row mb-0">
+                                @if($usersMale->isEmpty())
+                                    <div class="col-sm-10 text-sm-right">
+                                        <dd>
+                                            Nenhuma volta computada.
+                                        </dd>
+                                    </div>
+                                @endif
                                 @foreach($usersMale as $userMale)
                                     @php
                                         if ($loop->iteration == 1) {
@@ -37,11 +44,10 @@
                                     <div class="col-sm-10 text-sm-left">
                                         <dd>
                                             {{ Str::words($userMale->name, 4, '') }}
-                                            <span class="label label-warning float-right">% prêmio: R${{ round($userMale->segments_count / $totalMaleSegments * 100, 2) }}</span>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-sm-center m-b-md">
-                                        <dt>{{ $loop->iteration }}#</dt>
+                                        <dt>{{ $progress == 0 ? '' : $loop->iteration }}#</dt>
                                     </div>
                                     <div class="col-sm-10 text-sm-left">
                                         <dd>
@@ -79,7 +85,6 @@
                                     <div class="col-sm-10 text-sm-right">
                                         <dd>
                                             {{ Str::words($userFemale->name, 4, '') }}
-                                            <span class="label label-warning float-left">% prêmio: R${{ round($userFemale->segments_count / $totalFemaleSegments * 100, 2) }}</span>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-center">
@@ -98,7 +103,7 @@
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-sm-center m-b-md">
-                                        <dt>{{ $loop->iteration }}#</dt>
+                                        <dt>{{ $progress == 0 ? '' : $loop->iteration }}#</dt>
                                     </div>
                                 @endforeach
                             </dl>
@@ -108,70 +113,4 @@
             </div>
         </div>
     </div>
-
-    <div class="row m-t-n">
-        <div class="col-sm-3 col-6">
-            <div class="widget style1 navy-bg">
-                <div class="row">
-                    <div class="col-2">
-                        <i class="fa fa-male fa-3x"></i>
-                    </div>
-                    <div class="col-10 text-right">
-                        <span> Atletas inscritos: </span>
-                        <h3 class="font-bold">{{ $countMale }}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 col-6">
-            <div class="widget style1 navy-bg">
-                <div class="row">
-                    <div class="col-2">
-                        <i class="fa fa-money fa-3x"></i>
-                    </div>
-                    <div class="col-10 text-right">
-                        <span> Premiação Total: </span>
-                        <h3 class="font-bold">R${{ $countMale*10 }},00</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 col-6">
-            <div class="widget style1 red-bg">
-                <div class="row">
-                    <div class="col-2">
-                        <i class="fa fa-female fa-3x"></i>
-                    </div>
-                    <div class="col-10 text-right">
-                        <span> Atletas inscritas: </span>
-                        <h3 class="font-bold">{{ $countFemale }}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 col-6">
-            <div class="widget style1 red-bg">
-                <div class="row">
-                    <div class="col-2">
-                        <i class="fa fa-money fa-3x"></i>
-                    </div>
-                    <div class="col-10 text-right">
-                        <span> Premiação Total: </span>
-                        <h3 class="font-bold">R${{ $countFemale*10 }},00</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-
-@push('custom-scripts')
-   {{--  <script type="text/javascript">
-        $(function () {
-            $("#sparkline1").sparkline([20,20,20], {
-                type: 'bullet',
-                targetWidth: 0
-            });
-        });
-    </script> --}}
-@endpush

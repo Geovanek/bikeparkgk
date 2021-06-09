@@ -1,11 +1,11 @@
 <div>
     <h4>Estísticas</h4>
     <div class="row m-t-sm">
-        <div class="col-md-6 col-sm-6">
+        <div class="col-6">
             <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
             <h5><strong>{{ $activities->count() }}</strong> atividades</h5>
         </div>
-        <div class="col-md-6 col-sm-6">
+        <div class="col-6">
             <span class="line">5,3,9,6,5,9,7,3,5,2</span>
             <h5><strong>{{ $countSegments }}</strong> voltas</h5>
         </div>

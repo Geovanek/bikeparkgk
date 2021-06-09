@@ -6,10 +6,28 @@
 					<img alt="image" width="100%" src="{{ asset('img/locallegend.png') }}"/>
 				</a>
 			</li>
-			<li class="special_link">
+			<li class="m-t-lg m-b-md m-l-sm m-r-sm">
 				<a href="#">
-					<span class="nav-label">Apoiadores</span>
+					<img alt="image" width="100%" src="{{ asset('img/apoiadores.png') }}"/>
 				</a>
+			</li>
+			<li class="text-center m-l-sm m-r-sm">
+				<img alt="image" class="m-b-sm" height="35px" src="{{ asset('img/md_black.png') }}"/>
+			</li>
+			<li class="text-center m-l-sm m-r-sm">
+				<img alt="image" class="m-b-sm" height="65px" src="{{ asset('img/pedrabikes.png') }}"/>
+			</li>
+			<li class="text-center m-l-sm m-r-sm">
+				<img alt="image" class="m-b-sm" height="65px" src="{{ asset('img/parkbikes.png') }}"/>
+			</li>
+			<li class="text-center m-l-sm m-r-sm">
+				<img alt="image" class="m-b-sm" height="60px" src="{{ asset('img/alemao.png') }}"/>
+			</li>
+			<li class="text-center m-l-sm m-r-sm">
+				<img alt="image" class="m-b-sm" height="60px" src="{{ asset('img/cambirelaesportes.png') }}"/>
+			</li>
+			<li class="text-center m-l-sm m-r-sm">
+				<img alt="image" class="m-b-sm" height="22px" src="{{ asset('img/cicleshoffmann.png') }}"/>
 			</li>
 		</ul>
 	</div>

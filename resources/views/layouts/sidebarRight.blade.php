@@ -1,10 +1,5 @@
 <div class="sidebar-panel" style="top:75px">
-    <div class='embed-container'>
-        <iframe src='https://www.youtube.com/embed/xGIPwfhW6Mk' frameborder='0' allowfullscreen></iframe>
-    </div>
-
-<hr>
-
+    
     @livewire('home-activity-stream')
     
     

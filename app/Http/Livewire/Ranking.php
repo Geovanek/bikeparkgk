@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 
-class HomeLocalLegend extends Component
+class Ranking extends Component
 {
     public $usersMale, $usersFemale, $countMale, $countFemale, $totalMaleSegments, $totalFemaleSegments;
 
@@ -13,11 +13,9 @@ class HomeLocalLegend extends Component
     {
         $this->usersMale = User::with('segments')
                                 ->withCount('segments')
-                                ->has('segments')
                                 ->where('sex', 'M')
                                 ->where('subscription', true)
                                 ->orderBy('segments_count', 'desc')
-                                ->limit(5)
                                 ->get();
         
         $this->totalMaleSegments = $this->usersMale->sum('segments_count');
@@ -26,16 +24,14 @@ class HomeLocalLegend extends Component
 
         $this->usersFemale = User::with('segments')
                                 ->withCount('segments')
-                                ->has('segments')
                                 ->where('sex', 'F')
                                 ->where('subscription', true)
                                 ->orderBy('segments_count', 'desc')
-                                ->limit(5)
                                 ->get();
         $this->totalFemaleSegments = $this->usersFemale->sum('segments_count');
 
         $this->countFemale = User::where('sex', 'F')->where('subscription', true)->count();
 
-        return view('livewire.home-local-legend');
+        return view('livewire.ranking');
     }
 }
