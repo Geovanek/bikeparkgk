@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title bg-primary">
                     <h5>Atletas Cadastrados no Local Legend</h5>
@@ -17,12 +17,13 @@
                             <tr>
                                 <th data-toggle="true">Nome</th>
                                 <th data-hide="all">Strava ID</th>
-                                <th>Sexo</th>
+                                <th class="text-center">Sexo</th>
                                 <th data-hide="all">E-mail</th>
                                 <th data-hide="all">Cidade</th>
                                 <th data-hide="all">Estado</th>
                                 <th data-hide="all">Atividades até</th>
-                                <th>Inscrição</th>
+                                <th class="text-center">Inscrição</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,14 +31,19 @@
                                 <tr>
                                     <td>{{ $athlete->name }}</td>
                                     <td>{{ $athlete->strava_id }}</td>
-                                    <td>{{ $athlete->sex }}</td>
+                                    <td class="text-center">{{ $athlete->sex }}</td>
                                     <td>{{ $athlete->email }}</td>
                                     <td>{{ $athlete->city }}</td>
                                     <td>{{ $athlete->state }}</td>
                                     <td>{{ $athlete->activities_until}}</td>
-                                    <td>
-                                        <button type="button" wire:click.self="subscription({{ $athlete->id }},{{ $athlete->subscription }})" class="btn {{ $athlete->subscription ? 'btn-primary' : 'btn-danger' }} btn-xs" name="{{ $athlete->strava_id }}">
+                                    <td class="text-center">
+                                        <button type="button" wire:click.self="subscription({{ $athlete->id }},{{ $athlete->subscription }})" class="btn {{ $athlete->subscription ? 'btn-primary' : 'btn-danger' }} btn-sm" name="{{ $athlete->strava_id }}">
                                             <i class="fa fa-{{ $athlete->subscription ? 'check' : 'times' }}"></i> 
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" wire:click.self="showConfirmation({{ $athlete->id }})" class="btn btn-danger btn-sm" name="{{ $athlete->strava_id }}">
+                                            <i class="fa fa-trash-o"></i> 
                                         </button>
                                     </td>
                                 </tr>

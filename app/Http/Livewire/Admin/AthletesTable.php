@@ -12,6 +12,8 @@ class AthletesTable extends Component
     public $subscription;
     public $athleteId;
 
+    protected $listeners = ['destroy'];
+
     protected $messages = [
         'subscription.required' => 'Oops! Ocorreu um erro. Por favor, contate o suporte.',
         'subscription.boolean' => 'O valor informado para ativação esta incorreto. Por favor contate o suporte.',
@@ -34,5 +36,24 @@ class AthletesTable extends Component
             'type' => $return['type'], 
             'message' => $return['message'],
         ]);
+    }
+
+    public function destroy($key)
+    {
+
+        $user = User::where('id', $key)->firstOrFail();
+        $user->delete();
+
+        $this->emit('message', [
+            'type' => 'success', 
+            'message' => 'Usuário deletado.'
+        ]);
+
+        $this->emit('footable');
+    }
+
+    public function showConfirmation($athleteId)
+    { 
+        $this->dispatchBrowserEvent('swalConfirm', ['key' => $athleteId]);
     }
 }

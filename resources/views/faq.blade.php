@@ -52,7 +52,7 @@
                     <div class="col-md-3">
                         <div class="tag-list">
                             <span class="tag-item">03/06/2021</span>
-                            <span class="tag-item">23/06/2021</span>
+                            <span class="tag-item">27/06/2021</span>
                         </div>
                     </div>
                     <div class="col-md-2 text-right">
@@ -64,7 +64,7 @@
                         <div id="faq1" class="panel-collapse collapse ">
                             <div class="faq-answer">
                                 <p>
-                                    Serão 21 dias, iniciando no feriado de Corpus Christi (03/06) até dia 23/06, quarta-feira véspera da 2º Etapa do Catarinense de XCO.
+                                    Serão 25 dias, iniciando no feriado de Corpus Christi (03/06) até dia 27/06.
                                 </p>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="tag-list">
-                            <span class="tag-item">10/06/2021</span>
+                            <span class="tag-item">13/06/2021</span>
                         </div>
                     </div>
                     <div class="col-md-2 text-right">
@@ -92,7 +92,7 @@
                                 <p>
                                     As inscrições poderão ser realizadas mesmo após o início do desafio, pois o sistema buscará as informações das voltas realizadas através da plataforma do Strava.
                                 </p>
-                                <p><span class="label label-danger">Data LIMITE para inscrição: 10/06.</span></p>
+                                <p><span class="label label-danger">Data LIMITE para inscrição: 13/06.</span></p>
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                                 <p>
                                     Somente participarão do Desafio os atletas inscritos no site - www.bikeparkgk.com.br - com sua conta do STRAVA conectada e com as inscrições pagas (R$20,00).
                                 </p>
-                                <p><span class="label label-danger">Data LIMITE para inscrição: 10/06.</span></p>
+                                <p><span class="label label-danger">Data LIMITE para inscrição: 13/06.</span></p>
                             </div>
                         </div>
                     </div>

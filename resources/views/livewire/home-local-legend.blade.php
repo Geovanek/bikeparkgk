@@ -37,7 +37,7 @@
                                     <div class="col-sm-10 text-sm-left">
                                         <dd>
                                             {{ Str::words($userMale->name, 4, '') }}
-                                            <span class="label label-warning float-right">% prêmio: R${{ round($userMale->segments_count / $totalMaleSegments * 100, 2) }}</span>
+                                            <span class="label label-warning float-right">% prêmio: R${{ round(($countMale * 10) * ($userMale->segments_count / $totalMaleSegments), 2) }}</span>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-sm-center m-b-md">
@@ -79,7 +79,7 @@
                                     <div class="col-sm-10 text-sm-right">
                                         <dd>
                                             {{ Str::words($userFemale->name, 4, '') }}
-                                            <span class="label label-warning float-left">% prêmio: R${{ round($userFemale->segments_count / $totalFemaleSegments * 100, 2) }}</span>
+                                            <span class="label label-warning float-left">% prêmio: R${{ round(($countFemale * 10) * ($userFemale->segments_count / $totalFemaleSegments), 2) }}</span>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-center">

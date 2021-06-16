@@ -12,7 +12,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <h3><i class="fa fa-male"></i> Masculino</h3>
                             <dl class="row mb-0">
                                 @if($usersMale->isEmpty())
@@ -60,7 +60,7 @@
                                 @endforeach
                             </dl>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <h3 class="text-right">Feminino <i class="fa fa-female"></i></h3>
                             <dl class="row mb-0">
                                 @if($usersFemale->isEmpty())

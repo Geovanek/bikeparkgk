@@ -62,29 +62,29 @@ class GetActivities extends Command
                 } else {
                     Log::info('Obtendo atividades do usuário '. $user->id);
 
-                    // Make sure Strava API Token is valid
-                    if (Carbon::now() > $user->expires_at) {
-                        Log::info('API Token expirou, atualizando o token.');
-                        // Token has expired, generate new tokens using the currently stored user refresh token
-                        $refresh = Strava::refreshToken($user->refresh_token);
-
-                        $user->update([
-                            'access_token' => $refresh->access_token,
-                            'refresh_token' => $refresh->refresh_token,
-                            'expires_at' => Carbon::createFromTimestamp($refresh->expires_at)
-                        ]);
-
-                        $user->save();
-                    }
-
                     // Set starting date to get activities from if not set
                     if (empty($user->activities_until)) {
-                        Log::info('Não foram encontradas atividades deste usuário, obtendo atividades desde 03-06-2021.');
+                        Log::info('Não foram encontradas atividades deste usuário, obtendo atividades desde'. $user->activities_until);
                         $user->activities_until = Carbon::createMidnightDate($configSegment->start_date);
                         $user->save();
                     }
 
                     if ($user->activities_until->lessThanOrEqualTo(Carbon::createMidnightDate($configSegment->end_date)->addHours(23)->addMinutes(59))) {
+
+                        // Make sure Strava API Token is valid
+                        if (Carbon::now() > $user->expires_at) {
+                            Log::info('API Token expirou, atualizando o token.');
+                            // Token has expired, generate new tokens using the currently stored user refresh token
+                            $refresh = Strava::refreshToken($user->refresh_token);
+
+                            $user->update([
+                                'access_token' => $refresh->access_token,
+                                'refresh_token' => $refresh->refresh_token,
+                                'expires_at' => Carbon::createFromTimestamp($refresh->expires_at)
+                            ]);
+
+                            $user->save();
+                        }
 
                         $now = Carbon::now()->timestamp;
                         $activities = collect(Strava::activities($user->access_token, 1, 100, $now, ($user->activities_until->timestamp - 1)));
@@ -92,6 +92,11 @@ class GetActivities extends Command
 
                         if(count($activities) == 0) {
                             Log::info('Nenhuma atividade encontrada para o usuário.');
+
+                            $user->activities_until = Carbon::parse($user->activities_until)->addHours(2);
+
+                            $user->save();
+                            
                         } else {
                             Log::info(count($activities) .' atividade(s) encontrada(s).');
 
@@ -114,7 +119,7 @@ class GetActivities extends Command
                                         'utc_offset' => $activity->utc_offset,
                                     ]);
 
-                                    $user->activities_until = Carbon::parse($activity->start_date_local)->addSeconds($activity->elapsed_time);
+                                    $user->activities_until = Carbon::parse($activity->start_date_local)->addSeconds($activity->elapsed_time)->addHours(4);
 
                                     // Verificação do segmento na atividade e contagem de voltas
                                     $getSegments = Strava::activity($user->access_token, $activity->id);
@@ -160,8 +165,8 @@ class GetActivities extends Command
         $now = Carbon::now();
         Cache::store('file')->put('strava_get_activities_time', $now->toDateTimeString());
         $now = $now->addMinutes(15);
-        $start = Carbon::createFromTimeString('05:00');
-        $end = Carbon::createFromTimeString('23:00');
+        $start = Carbon::createFromTimeString('07:00');
+        $end = Carbon::createFromTimeString('20:00');
 
         if ($now->between($start, $end)) {
             Cache::store('file')->put('strava_next_activities_time', $now->toDateTimeString());

@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('strava:getactivities')->everyFifteenMinutes();
+        $schedule->command('strava:getactivities')->everyThirtyMinutes();
     }
 
     /**

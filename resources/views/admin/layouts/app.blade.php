@@ -19,6 +19,8 @@
     <link href="{{ asset('Inspina/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <!-- FooTable -->
     <link href="{{ asset('Inspina/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="{{ asset('Inspina/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
     <!-- Toastr style -->
     <link href="{{ asset('Inspina/css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 
@@ -67,6 +69,8 @@
   <script src="{{ asset('Inspina/js/demo/sparkline-demo.js') }}"></script>
   <!-- ChartJS-->
   <script src="{{ asset('Inspina/js/plugins/chartJs/Chart.min.js') }}"></script>
+  <!-- Sweet alert -->
+  <script src="{{ asset('Inspina/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
   <!-- Toastr -->
   <script src="{{ asset('Inspina/js/plugins/toastr/toastr.min.js') }}"></script>
 

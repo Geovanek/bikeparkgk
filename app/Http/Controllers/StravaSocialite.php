@@ -8,6 +8,7 @@ use App\Models\User;
 use Socialite;
 use Auth;
 use Carbon\Carbon;
+use Exception;
 use Redirect;
 
 class StravaSocialite extends Controller
@@ -21,7 +22,24 @@ class StravaSocialite extends Controller
 
     public function Login()
     {
-        $providerUser = Socialite::driver('strava')->user();
+
+        try {
+            $providerUser = Socialite::driver('strava')->user();
+        } catch (Exception $ex) {
+            $code = $ex->getCode();
+            switch ($code) {
+                case '429':
+                    $error = 'strava-rate-limit'; 
+                    $msg = 'A taxa limite de comunicação com o STRAVA foi alcançada para o dia de hoje. Por favor, tente novamente, mas provavelmente, só amanhã.';
+                    break;
+                default :
+                    $error = 'error-strava';
+                    $msg = 'Estamos passando por alguma instabilidade. Por favor, tenta novamente ou contato o responsável.';
+                    break;
+                }
+            return redirect('/')->with($error, $msg);
+        }
+
 
         if ($providerUser->user['sex'] == null) {
             return redirect('/')->with('strava-sex', 'O campo sexo em seu STRAVA não está preenchido, esse campo é obritório para o cadastro no site.');

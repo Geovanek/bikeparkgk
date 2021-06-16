@@ -36,14 +36,7 @@
         <div id="page-wrapper" class="gray-bg @if(Request::is('/')) sidebar-content @endif">
             @include('layouts.header')
             
-                @if (session('strava-sex'))
-                    <div class="row">
-                        <div class="alert alert-danger alert-dismissable">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                            {{ session('strava-sex') }}
-                        </div>
-                    </div>
-                @endif
+                @include('includes._alerts')
 
                 @yield('content')
 
