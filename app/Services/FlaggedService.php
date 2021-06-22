@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Models\StravaActivity;
+use App\Models\StravaSegment;
 
-class SubscriptionService
+class FlaggedService
 {
     private $activity;
     private $flagged;
@@ -15,8 +16,9 @@ class SubscriptionService
         $this->flagged = ($flagged === 0) ? 1 : 0;
 
         $query = $this->activity->update(['flagged' => $this->flagged]);
+        $query2 = $this->activity->segments->toQuery()->update(['flagged' => $this->flagged]);
 
-        if (!$query) {
+        if (!$query OR !$query2) {
             $type = 'warning'; 
             $message = 'Não foi possível executar a tarefa. Tente novamente ou contate o suporte.';
 

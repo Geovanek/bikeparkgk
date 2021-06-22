@@ -16,8 +16,8 @@ class CreateStravaActivitiesTable extends Migration
         Schema::create('strava_activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->onDelete('cascade');
-            $table->string('external_id');
-            $table->string('activity_upload_id');
+            $table->string('external_id')->nullable();
+            $table->string('activity_upload_id')->nullable();
             $table->string('name');
             $table->string('type');
             $table->timestamp('start_date')->nullable();

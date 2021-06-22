@@ -1,5 +1,6 @@
 window.addEventListener('swalConfirm', function (event) {
   var key = event.detail.key;
+  var model = event.detail.model;
   swal({
     title: 'Tem certeza?',
     text: "Você não será capaz de recuperar depois!",
@@ -14,7 +15,7 @@ window.addEventListener('swalConfirm', function (event) {
     buttonsStyling: false
   }, function (isConfirm) {
     if (isConfirm) {
-      Livewire.emit('destroy', key);
+      Livewire.emit('destroy' + model, key);
     }
     /* swal(
         'Deleted!',

@@ -25,11 +25,11 @@
                                 @foreach($usersMale as $userMale)
                                     @php
                                         if ($loop->iteration == 1) {
-                                            $first = $userMale->segments_count;
+                                            $first = $userMale->segments_count + $userMale->activities_sum_laps_to_compensate;
                                         }
 
                                         if (!empty($userMale->segments_count)) {
-                                            $progress = round($userMale->segments_count/$first*100);
+                                            $progress = round(($userMale->segments_count + $userMale->activities_sum_laps_to_compensate) / $first * 100);
                                         } else {
                                             $progress = 0;
                                         }
@@ -54,7 +54,7 @@
                                             <div class="progress progress-small m-t-n-sm m-b-1">
                                                 <div style="width: {{ $progress }}%;" class="progress-bar progress-bar-striped"></div>
                                             </div>
-                                            <small><strong>{{ $userMale->segments_count }}</strong> volta(s)</small>
+                                            <small><strong>{{ $userMale->segments_count + $userMale->activities_sum_laps_to_compensate }}</strong> volta(s)</small>
                                         </dd>
                                     </div>
                                 @endforeach
@@ -73,11 +73,11 @@
                                 @foreach($usersFemale as $userFemale)
                                     @php
                                         if ($loop->iteration == 1) {
-                                            $first = $userFemale->segments_count;
+                                            $first = $userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate;
                                         }
 
                                         if (!empty($userFemale->segments_count)) {
-                                            $progress = round($userFemale->segments_count/$first*100);
+                                            $progress = round(($userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate) / $first * 100);
                                         } else {
                                             $progress = 0;
                                         }
@@ -99,7 +99,7 @@
                                             <div style="display:inherit" class="progress progress-small m-t-n-sm m-b-1">
                                                 <div style="width: {{ $progress }}%; float: right;display: flex;" class="progress-bar progress-bar-striped progress-bar-danger"></div>
                                             </div>
-                                            <small><strong>{{ $userFemale->segments_count }}</strong> volta(s)</small>
+                                            <small><strong>{{ $userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate }}</strong> volta(s)</small>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-sm-center m-b-md">

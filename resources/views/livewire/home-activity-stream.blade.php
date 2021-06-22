@@ -11,10 +11,6 @@
                     <span class="badge badge-info">27/06/2021</span>
                     Término
                 </li>
-                <li class="list-group-item">
-                    <span class="badge badge-warning">13/06/2021</span>
-                    Inscrições
-                </li>
             </ul>
         </div>
     </div>
@@ -58,7 +54,7 @@
 
                     <span class="float-right text-left">
                         <small>
-                            <span class="badge badge-primary">{{ $activity->segments_count }} </span>
+                            <span class="badge badge-primary">{{ $activity->segments_count + $activity->laps_to_compensate }} </span>
                             {{ $activity->segments_count > 1 ? 'voltas' : 'volta' }}
                         </small>
                     </span>

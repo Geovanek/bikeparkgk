@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="faq-item">
+{{--             <div class="faq-item">
                 <div class="row">
                     <div class="col-md-7">
                         <a data-toggle="collapse" href="#faq2" class="faq-question">Data Limite para Inscrição</a>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="faq-item">
                 <div class="row">
                     <div class="col-md-7">

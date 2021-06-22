@@ -15,6 +15,7 @@ class ActivityStream extends Component
         $this->activities = StravaActivity::with('segments')
                                 ->where('user_id', request()->id)
                                 ->has('segments')
+                                //->where('flagged', false)
                                 ->orderBy('start_date_local', 'desc')
                                 ->get();
     }

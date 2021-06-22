@@ -92,11 +92,6 @@ class GetActivities extends Command
 
                         if(count($activities) == 0) {
                             Log::info('Nenhuma atividade encontrada para o usuário.');
-
-                            $user->activities_until = Carbon::parse($user->activities_until)->addHours(2);
-
-                            $user->save();
-                            
                         } else {
                             Log::info(count($activities) .' atividade(s) encontrada(s).');
 
@@ -116,10 +111,11 @@ class GetActivities extends Command
                                         'type' => strtolower($activity->type),
                                         'start_date' => Carbon::parse($activity->start_date),
                                         'start_date_local' => Carbon::parse($activity->start_date_local),
+                                        'elapsed_time' => $activity->elapsed_time,
                                         'utc_offset' => $activity->utc_offset,
                                     ]);
 
-                                    $user->activities_until = Carbon::parse($activity->start_date_local)->addSeconds($activity->elapsed_time)->addHours(4);
+                                    $user->activities_until = Carbon::parse($activity->start_date_local)->addSeconds($activity->elapsed_time);
 
                                     // Verificação do segmento na atividade e contagem de voltas
                                     $getSegments = Strava::activity($user->access_token, $activity->id);

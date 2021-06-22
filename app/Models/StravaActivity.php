@@ -21,6 +21,9 @@ class StravaActivity extends Model
         'start_date_local',
         'utc_offset',
         'is_analyzed',
+        'flagged',
+        'elapsed_time',
+        'laps_to_compensate',
     ];
 
     protected $dates = ['start_date', 'start_date_local'];

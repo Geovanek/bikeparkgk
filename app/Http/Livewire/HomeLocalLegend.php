@@ -11,8 +11,10 @@ class HomeLocalLegend extends Component
 
     public function render()
     {
-        $this->usersMale = User::with('segments')
-                                ->withCount('segments')
+        $this->usersMale = User::withCount(['segments' => function ($query) {
+                                    $query->where('flagged', false);
+                                }])
+                                ->withSum('activities', 'laps_to_compensate')
                                 ->has('segments')
                                 ->where('sex', 'M')
                                 ->where('subscription', true)
@@ -20,19 +22,21 @@ class HomeLocalLegend extends Component
                                 ->limit(5)
                                 ->get();
         
-        $this->totalMaleSegments = $this->usersMale->sum('segments_count');
+        $this->totalMaleSegments = $this->usersMale->sum('segments_count') + $this->usersMale->sum('activities_sum_laps_to_compensate');
 
         $this->countMale = User::where('sex', 'M')->where('subscription', true)->count();
 
-        $this->usersFemale = User::with('segments')
-                                ->withCount('segments')
+        $this->usersFemale = User::withCount(['segments' => function ($query) {
+                                    $query->where('flagged', false);
+                                }])
+                                ->withSum('activities', 'laps_to_compensate')
                                 ->has('segments')
                                 ->where('sex', 'F')
                                 ->where('subscription', true)
                                 ->orderBy('segments_count', 'desc')
                                 ->limit(5)
                                 ->get();
-        $this->totalFemaleSegments = $this->usersFemale->sum('segments_count');
+        $this->totalFemaleSegments = $this->usersFemale->sum('segments_count') + $this->usersFemale->sum('activities_sum_laps_to_compensate');
 
         $this->countFemale = User::where('sex', 'F')->where('subscription', true)->count();
 

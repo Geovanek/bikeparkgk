@@ -24,6 +24,12 @@
                                                 {{ \Carbon\Carbon::parse($activity->start_date_local)->calendar() }}
                                             </span>
                                         @endif
+
+                                        @if($activity->flagged)
+                                            <span class="float-right text-left label label-warning" data-toggle="tooltip" data-placement="top" title="Provavelmente atividade duplicada.">
+                                                <i class="fa fa-flag"></i> Atividade sinalizada
+                                            </span>
+                                        @endif
                                     </div>
                                     {{ $activity->name }}
                                     <span class="float-right text-left">

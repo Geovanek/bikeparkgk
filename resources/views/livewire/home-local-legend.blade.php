@@ -15,14 +15,21 @@
                         <div class="col-md-6">
                             <h3><i class="fa fa-male"></i> Masculino</h3>
                             <dl class="row mb-0">
+                                @if($usersMale->isEmpty())
+                                    <div class="col-sm-10 text-sm-right">
+                                        <dd>
+                                            Nenhuma volta computada.
+                                        </dd>
+                                    </div>
+                                @endif
                                 @foreach($usersMale as $userMale)
                                     @php
                                         if ($loop->iteration == 1) {
-                                            $first = $userMale->segments_count;
+                                            $first = $userMale->segments_count + $userMale->activities_sum_laps_to_compensate;
                                         }
 
                                         if (!empty($userMale->segments_count)) {
-                                            $progress = round($userMale->segments_count/$first*100);
+                                            $progress = round(($userMale->segments_count + $userMale->activities_sum_laps_to_compensate) / $first * 100);
                                         } else {
                                             $progress = 0;
                                         }
@@ -37,7 +44,7 @@
                                     <div class="col-sm-10 text-sm-left">
                                         <dd>
                                             {{ Str::words($userMale->name, 4, '') }}
-                                            <span class="label label-warning float-right">% prêmio: R${{ round(($countMale * 10) * ($userMale->segments_count / $totalMaleSegments), 2) }}</span>
+                                            <span class="label label-warning float-right">% prêmio: R${{ round(($countMale * 10) * (($userMale->segments_count  + $userMale->activities_sum_laps_to_compensate) / $totalMaleSegments), 2) }}</span>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-sm-center m-b-md">
@@ -48,7 +55,7 @@
                                             <div class="progress progress-small m-t-n-sm m-b-1">
                                                 <div style="width: {{ $progress }}%;" class="progress-bar progress-bar-striped"></div>
                                             </div>
-                                            <small><strong>{{ $userMale->segments_count }}</strong> volta(s)</small>
+                                            <small><strong>{{ $userMale->segments_count + $userMale->activities_sum_laps_to_compensate }}</strong> volta(s)</small>
                                         </dd>
                                     </div>
                                 @endforeach
@@ -67,11 +74,11 @@
                                 @foreach($usersFemale as $userFemale)
                                     @php
                                         if ($loop->iteration == 1) {
-                                            $first = $userFemale->segments_count;
+                                            $first = $userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate;
                                         }
 
                                         if (!empty($userFemale->segments_count)) {
-                                            $progress = round($userFemale->segments_count/$first*100);
+                                            $progress = round(($userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate) / $first * 100);
                                         } else {
                                             $progress = 0;
                                         }
@@ -79,7 +86,7 @@
                                     <div class="col-sm-10 text-sm-right">
                                         <dd>
                                             {{ Str::words($userFemale->name, 4, '') }}
-                                            <span class="label label-warning float-left">% prêmio: R${{ round(($countFemale * 10) * ($userFemale->segments_count / $totalFemaleSegments), 2) }}</span>
+                                            <span class="label label-warning float-left">% prêmio: R${{ round(($countFemale * 10) * (($userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate) / $totalFemaleSegments), 2) }}</span>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-center">
@@ -94,7 +101,7 @@
                                             <div style="display:inherit" class="progress progress-small m-t-n-sm m-b-1">
                                                 <div style="width: {{ $progress }}%; float: right;display: flex;" class="progress-bar progress-bar-striped progress-bar-danger"></div>
                                             </div>
-                                            <small><strong>{{ $userFemale->segments_count }}</strong> volta(s)</small>
+                                            <small><strong>{{ $userFemale->segments_count + $userFemale->activities_sum_laps_to_compensate }}</strong> volta(s)</small>
                                         </dd>
                                     </div>
                                     <div class="col-sm-2 text-sm-center m-b-md">

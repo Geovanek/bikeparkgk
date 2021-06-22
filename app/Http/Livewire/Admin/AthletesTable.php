@@ -12,7 +12,7 @@ class AthletesTable extends Component
     public $subscription;
     public $athleteId;
 
-    protected $listeners = ['destroy'];
+    protected $listeners = ['destroyUser'];
 
     protected $messages = [
         'subscription.required' => 'Oops! Ocorreu um erro. Por favor, contate o suporte.',
@@ -38,7 +38,7 @@ class AthletesTable extends Component
         ]);
     }
 
-    public function destroy($key)
+    public function destroyUser($key)
     {
 
         $user = User::where('id', $key)->firstOrFail();
@@ -54,6 +54,6 @@ class AthletesTable extends Component
 
     public function showConfirmation($athleteId)
     { 
-        $this->dispatchBrowserEvent('swalConfirm', ['key' => $athleteId]);
+        $this->dispatchBrowserEvent('swalConfirm', ['model'=>'User', 'key' => $athleteId]);
     }
 }

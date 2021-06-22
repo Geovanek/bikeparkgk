@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\StravaActivity;
+use App\Services\FlaggedService;
 use Livewire\Component;
 
 class ActivitiesTable extends Component
@@ -10,8 +11,9 @@ class ActivitiesTable extends Component
     public $activities;
     public $flagged;
     public $activityId;
+    public $lapsToCompensate;
 
-    protected $listeners = ['destroy'];
+    protected $listeners = ['destroyActivity'];
 
     protected $messages = [
         'flagged.required' => 'Oops! Ocorreu um erro. Por favor, contate o suporte.',
@@ -42,9 +44,8 @@ class ActivitiesTable extends Component
         ]);
     }
 
-    public function destroy($key)
+    public function destroyActivity($key)
     {
-
         $activity = StravaActivity::where('id', $key)->firstOrFail();
         $activity->delete();
 
@@ -58,6 +59,25 @@ class ActivitiesTable extends Component
 
     public function showConfirmation($activityId)
     { 
-        $this->dispatchBrowserEvent('swalConfirm', ['key' => $activityId]);
+        $this->dispatchBrowserEvent('swalConfirm', ['model'=>'Activity', 'key' => $activityId]);
+    }
+
+    public function lapsToCompensate($value, $activityId)
+    {
+        $query = StravaActivity::where('id', $activityId)->update(['laps_to_compensate' => $value]);
+
+        if ($query) {
+            $this->emit('message', [
+                'type' => 'info', 
+                'message' => 'Voltas adicionadas.'
+            ]);
+        } else {
+            $this->emit('message', [
+                'type' => 'danger', 
+                'message' => 'Encontramos um problema.'
+            ]);
+        }
+
+        $this->emit('footable');
     }
 }

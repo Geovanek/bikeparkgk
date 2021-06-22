@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('page-css')
+    <link href="{{ asset('Inspina/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -16,10 +17,15 @@
 @endsection
 
 @push('custom-scripts')
+    <!-- TouchSpin -->
+    <script src="{{ asset('Inspina/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.footable').footable();
-
+        });
+        $(".touchspin").TouchSpin({
+            buttondown_class: 'btn btn-link',
+            buttonup_class: 'btn btn-link'
         });
     </script>
 @endpush
