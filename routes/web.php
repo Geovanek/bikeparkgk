@@ -24,5 +24,7 @@ Route::view('/', 'index')->name('home');
 Auth::routes();
 
 Route::view('/profile/{id}', 'profile')->middleware('auth')->name('profile');
-Route::view('/ranking', 'ranking')->name('ranking');
+Route::group(['prefix' => 'locallegend'], function(){
+    Route::view('/ranking', 'ranking')->name('ranking');
+});
 Route::view('/admin/dashboard', 'admin.dashboard')->middleware(['auth','admin'])->name('admin.dashboard');

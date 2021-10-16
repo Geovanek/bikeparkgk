@@ -30,7 +30,15 @@
     @livewireStyles
     
 </head>
-<body class="fixed-sidebar no-skin-config">
+<body class="top-navigation">
+    <div id="wrapper">
+        <div id="page-wrapper" style="background: #111">
+            @include('layouts.header')
+            @yield('content')
+        </div>
+    </div>
+{{-- <body class="fixed-sidebar no-skin-config">
+    
     <div style="overflow-y: hidden;" id="wrapper">
         @include('layouts.sidebarLeft')
         <div id="page-wrapper" class="gray-bg @if(Request::is('/')) sidebar-content @endif">
@@ -42,7 +50,7 @@
 
             @include('layouts.footer')
         </div>
-    </div>
+    </div> --}}
 
   <!-- Mainly scripts -->
   <script src="{{ asset('Inspina/js/jquery-3.1.1.min.js') }}"></script>

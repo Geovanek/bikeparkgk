@@ -1,15 +1,15 @@
-<div class="row border-bottom">
-    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+<div class="row">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background: #f5deb1">
         <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+            {{-- <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
                 <i class="fa fa-bars"></i>
-            </a>
+            </a> --}}
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Desafio Local Legend Bike Park GK</span>
+                    <h4 class="m-r-sm text-muted welcome-message">3° Rachão Bike Park GK</h4>
                 </li>
-                @guest
+                {{-- @guest
                     <li>
                         <a href="{{ route('strava.redirect') }}">
                             <img alt="Login com Strava" width="100%" src="{{ asset('img/connect_strava.png') }}">
@@ -51,7 +51,7 @@
                             </li>
                         </ul>
                     </li>
-                @endguest
+                @endguest --}}
             </ul>
 
     </nav>

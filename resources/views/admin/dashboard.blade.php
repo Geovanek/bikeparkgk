@@ -8,6 +8,7 @@
 
 <div class="wrapper wrapper-content">
     <div class="container">
+        @livewire('admin.rachao-table')
         @livewire('admin.config-segment')
         @livewire('admin.athletes-table')
         @livewire('admin.activities-table')
